@@ -16,9 +16,9 @@ const Calculator = () => {
       case "multiply":
         setResult(num1 * num2);
         break;
-    //   case "divide":
-    //     setResult(num2 !== 0 ? num1 / num2 : "Cannot divide by zero");
-    //     break;
+      case "divide":
+        setResult(num2 !== 0 ? num1 / num2 : "Cannot divide by zero");
+        break;
     //   case "modulus":
     //     setResult(num2 !== 0 ? num1 % num2 : "Cannot find modulus with zero");
     //     break;
@@ -50,8 +50,8 @@ const Calculator = () => {
         <button onClick={() => handleOperation("add")}>+</button>
         <button onClick={() => handleOperation("subtract")}>-</button>
         <button onClick={() => handleOperation("multiply")}>*</button>
-        {/* <button onClick={() => handleOperation("divide")}>/</button>
-        <button onClick={() => handleOperation("modulus")}>%</button> */}
+        <button onClick={() => handleOperation("divide")}>/</button>
+        {/* <button onClick={() => handleOperation("modulus")}>%</button> */}
       </div>
       <br />
       <h1>Result: {result}</h1>
