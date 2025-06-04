@@ -1,8 +1,12 @@
+import Calculator from "./Calculator"
+
  
 
 const App = () => {
   return (
-    <div>App</div>
+    <div>
+      <Calculator/>
+    </div>
   )
 }
 
