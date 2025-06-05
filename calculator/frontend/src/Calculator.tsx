@@ -1,29 +1,21 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Calculator = () => {
   const [num1, setNum1] = useState<number>(0);
   const [num2, setNum2] = useState<number>(0);
-  const [result, setResult] = useState<string | number | null>(null);
+  const [resultData, setResultData] = useState<string | number | null>(null);
 
-  const handleOperation = (operation: string) => {
-    switch (operation) {
-      case "add":
-        setResult(num1 + num2);
-        break;
-      case "subtract":
-        setResult(num1 - num2);
-        break;
-      case "multiply":
-        setResult(num1 * num2);
-        break;
-      case "divide":
-        setResult(num2 !== 0 ? num1 / num2 : "Cannot divide by zero");
-        break;
-      case "modulus":
-        setResult(num2 !== 0 ? num1 % num2 : "Cannot find modulus with zero");
-        break;
-      default:
-        setResult("Please give a valid input");
+  const handleOperation = async (operation: string) => {
+    try {
+      const response = await axios.post("http://localhost:4000/calculate", {
+        num1,
+        num2,
+        operation,
+      });
+      setResultData(response.data.result);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -46,7 +38,7 @@ const Calculator = () => {
       />
       <br />
       <br />
-      <div style={{display:"flex", gap:"20px"}}>
+      <div style={{ display: "flex", gap: "20px" }}>
         <button onClick={() => handleOperation("add")}>+</button>
         <button onClick={() => handleOperation("subtract")}>-</button>
         <button onClick={() => handleOperation("multiply")}>*</button>
@@ -54,7 +46,7 @@ const Calculator = () => {
         <button onClick={() => handleOperation("modulus")}>%</button>
       </div>
       <br />
-      <h1>Result: {result}</h1>
+      <h1>Result: {resultData}</h1>
     </div>
   );
 };
