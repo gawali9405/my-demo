@@ -1,13 +1,11 @@
-import Calculator from "./Calculator"
-
- 
+import Calculator from "./Calculator";
 
 const App = () => {
   return (
-    <div>
-      <Calculator/>
+    <div className="App">
+      <Calculator />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

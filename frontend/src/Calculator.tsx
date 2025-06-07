@@ -1,62 +1,59 @@
 import { useState } from "react";
+import "./Calculator.css";
 
 const Calculator = () => {
-  const [num1, setNum1] = useState<number >(0);
-  const [num2, setNum2] = useState<number>(0);
-  const [result, setResult] = useState<string | number | null>(null);
+  const [input, setInput] = useState("");
 
-  const handleOperation = (operation: string) => {
-    switch (operation) {
-      case "add":
-        setResult(num1 + num2);
-        break;
-      case "subtract":
-        setResult(num1 - num2);
-        break;
-      case "multiply":
-        setResult(num1 * num2);
-        break;
-      case "divide":
-        setResult(num2 !== 0 ? num1 / num2 : "Cannot divide by zero");
-        break;
-      case "modulus":
-        setResult(num2 !== 0 ? num1 % num2 : "Cannot find modulus with zero");
-        break;
-      default:
-        setResult("Please give a valid input");
+  const handleClick = (value: string) => {
+    if (value === "=") {
+      const result = Function('"use strict";return (' + input + ")")();
+      setInput(result.toString());
+    } else if (value === "⌫") {
+      setInput((prev) => prev.slice(0, -1));
+    } else if (value === "C") {
+      setInput("");
+    } else {
+      setInput((prev) => prev + value);
     }
   };
 
+  const buttons = [
+    "7",
+    "8",
+    "9",
+    "/",
+    "4",
+    "5",
+    "6",
+    "*",
+    "1",
+    "2",
+    "3",
+    "-",
+    "0",
+    ".",
+    "=",
+    "+",
+    "C",
+    "⌫"
+  ];
+
   return (
-    <div style={{margin:"10px"}}>
-      <h1>Calculator</h1>
-      <input
-        type="number"
-        value={num1}
-        placeholder="Enter first number"
-        onChange={(e) => setNum1(Number(e.target.value))}
-        style={{border:'1px solid black'}}
-      />
-      <br />
-      <br />
-      <input
-        type="number"
-        value={num2}
-        placeholder="Enter second number"
-        onChange={(e) => setNum2(Number(e.target.value))}
-        style={{border:'1px solid black'}}
-      />
-      <br />
-      <br />
-      <div style={{display:"flex", gap:"20px"}}>
-        <button onClick={() => handleOperation("add")}>+</button>
-        <button onClick={() => handleOperation("subtract")}>-</button>
-        <button onClick={() => handleOperation("multiply")}>*</button>
-        <button onClick={() => handleOperation("divide")}>/</button>
-        <button onClick={() => handleOperation("modulus")}>%</button>
+    <div className="calculator-container">
+      <div className="calculator">
+        <input className="display" type="text" value={input} readOnly />
+        <div className="buttons">
+          {buttons.map((btn, index) => (
+            <button
+              key={index}
+              onClick={() => handleClick(btn)}
+              className={btn === "=" ? "equal" : btn === "C" ? "clear" : ""}
+            >
+              {btn}
+            </button>
+          ))}
+        </div>
       </div>
-      <br />
-      <h1>Result: {result}</h1>
     </div>
   );
 };
